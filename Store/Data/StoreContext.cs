@@ -17,7 +17,7 @@ namespace Store.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Database Connection String goes Here");
+            optionsBuilder.UseSqlServer(@"Data Source=sqlserver;Initial Catalog=Store;User ID=ssis;Password=fullhouse;Encrypt=False");
         }
     }
 }
