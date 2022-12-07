@@ -15,7 +15,18 @@ namespace Store.Models
         public string? Email { get; set; }
         public string? Phone { get; set; }
 
-
         public ICollection<Order> Orders { get; set; } = null!;
+
+        public override string? ToString()
+        {
+            string ret = $"""
+                First Name:     {FirstName}
+                Last Name:      {LastName}
+                Address:        {Address}
+                Phone:          {Phone}
+                Email:          {Email}
+                """;
+            return ret;
+        }
     }
 }
