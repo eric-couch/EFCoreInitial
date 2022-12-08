@@ -52,5 +52,48 @@ do
         {
             Console.WriteLine(ThisOrder.ListOrder(custOrders));
         }
+    } else if (userResponse.ToLower() == "p")
+    {
+        Console.Clear();
+        Order newOrder = new Order()
+        {
+            Customer = ThisCustomer,
+            OrderPlaced = DateTime.Now
+        };
+        OrderDetail od = new OrderDetail()
+        {
+            Orders = newOrder
+        };
+        bool donewithProducts = false;
+        do
+        {
+            Console.WriteLine(ThisOrder.OrderMenu());
+            string orderItem = Console.ReadLine() ?? "q";
+            if (orderItem.ToLower() == "q")
+            {
+                donewithProducts = true;
+                break;
+            }  else if (Int32.TryParse(orderItem, out int productNumber))
+            {
+                var product = ThisOrder.GetProduct(productNumber);
+                if (product is not null)
+                {
+                    od.Products = product;
+                    od.Quantity = 1;
+                    ThisOrder.SaveOrder(newOrder);
+                    ThisOrder.SaveOrderDetail(od);
+                }
+            } else
+            {
+                Console.WriteLine("Invalid entry. Try again.");
+            }
+
+        } while (!donewithProducts);
+    } else if (userResponse.ToLower() == "q")
+    {
+        quitOrder = true;
+    } else
+    {
+        Console.WriteLine("Invalid Entry. Try again.");
     }
-} while (quitOrder);
+} while (!quitOrder);

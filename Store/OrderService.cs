@@ -61,6 +61,24 @@ namespace Store
             return ret;
         }
 
+        public Product? GetProduct(int id)
+        {
+            var product = (from p in _context.Products
+                           where p.Id == id
+                           select p).FirstOrDefault();
+            return product;
+        }
+
+        public void SaveOrder(Order order)
+        {
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+        public void SaveOrderDetail(OrderDetail detail)
+        {
+            _context.OrderDetails.Add(detail);
+            _context.SaveChanges();
+        }
         public static string MainMenu()
         {
             return """
@@ -68,6 +86,19 @@ namespace Store
                 (P)lace Order
                 (Q)uit
                 """;
+        }
+        public string OrderMenu()
+        {
+            string ret = "";
+            var products = (from p in _context.Products
+                            select p);
+            ret += "Select Item by number:\n";
+            foreach (var p in products)
+            {
+                ret += $"({p.Id}) {p.Name} {p.Price}\n";
+            }
+            ret += "(Q)uit\n";
+            return ret;
         }
     }
 }
